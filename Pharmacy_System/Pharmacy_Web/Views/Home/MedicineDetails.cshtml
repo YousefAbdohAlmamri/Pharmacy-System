@@ -1,0 +1,32 @@
+﻿@model Pharmacy_Web.Models.Medicine
+
+@{
+    ViewData["Title"] = "MedicineDetails";
+}
+<div class="card-custom" style=" margin-top: -10px;">
+    <div class="card-text">
+        <h2 >@Html.DisplayFor(model => model.Name)</h2>
+        <div>
+            <span style="margin-left: 70px; color: #7D8288;">السعر: @Html.DisplayFor(model => model.Price)</span>
+            <span style="color: #7D8288;">الفئة: @Html.DisplayFor(model => model.Category.Name)</span>
+        </div>
+        <div>
+            <span style="margin-left: 100px; color: #7D8288;">الشركة: @Html.DisplayFor(model => model.Company)</span>
+            <span style="color: #7D8288;">بلادالصنع: @Html.DisplayFor(model => model.MadeIn)</span>
+        </div>
+        <p>
+            @*
+                نوع المستخدم، نوع المستخدم، نوع المستخدم، نوع المستخدم<br>
+                نوع المستخدم، نوع المستخدم، نوع المستخدم، نوع المستخدم<br>
+                نوع المستخدم، نوع المستخدم، نوع المستخدم، نوع المستخدم*@
+            @Html.DisplayFor(model => model.Description)
+        </p>
+        <p style="color: #7D8288;">تاريخ الأنتاج:  @Html.DisplayFor(model => model.DateCreated)</p>
+        <p style="color: #7D8288;">تاريخ الإنتهاء: @Html.DisplayFor(model => model.ExpirationDate)</p>
+    </div>
+    <div class="container-img">
+        <div class="container-img-background">
+            <img src="https://localhost:44383/Images/@Model.ImageUrl" alt="رمز طبي" class="circuler-img" />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+﻿@model Pharmacy_Web.Models.Pharmacy
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div>
+    <h1 class="text-secondary">تفاصيل</h1>
+
+    <div>
+        <h4 class="text-secondary">للصيدلية</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2 for_key">
+                الاسم
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2 for_key">
+                الوصف
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="col-sm-2 for_key">
+                الصورة
+            </dt>
+            <dd class="col-sm-10">
+                <img src="https://localhost:44383/Images/@Model.ImageUrl" class="img-thumbnail" style="width:64px; height:64px;" />
+            </dd>
+            <dt class="col-sm-2 for_key">
+                الموقع
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.Location)
+            </dd>
+            <dt class="col-sm-2 for_key">
+                التلفون
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
+            <dt class="col-sm-2 for_key" >
+                المالك
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.User.Name)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@Model.Id">تعديل</a> |
+        <a asp-action="Index" class="btn btn-secondary">العودة للقائمة</a>
+    </div>
+
+</div>

@@ -1,0 +1,62 @@
+﻿@model Pharmacy_Web.Models.Pharmacy
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+
+<div>
+    <h1 class="text-secondary">حذف</h1>
+
+    <h3 class="text-secondary">هل انت متأكد انك تريد حذف هذه الصيدلية؟</h3>
+    <div>
+        @*<h4>Pharmacy</h4>*@
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2 for_key">
+                الاسم
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2 for_key">
+                الوصف
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="col-sm-2 for_key">
+                الصورة
+            </dt>
+            <dd class="col-sm-10">
+                <img src="https://localhost:44383/Images/@Model.ImageUrl" class="img-thumbnail" style="width:64px; height:64px;" />
+            </dd>
+            <dt class="col-sm-2 for_key">
+                الموقع
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.Location)
+            </dd>
+            <dt class="col-sm-2 for_key">
+                التلفون
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
+            <dt class="col-sm-2 for_key" >
+                المالك
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.User.Name)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="حذف" class="btn btn-danger" /> |
+            <a asp-action="Index" class="btn btn-secondary">العودة للقائمة</a>
+        </form>
+    </div>
+
+</div>

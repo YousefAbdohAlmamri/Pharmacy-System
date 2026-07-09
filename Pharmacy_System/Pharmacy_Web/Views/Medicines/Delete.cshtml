@@ -1,0 +1,79 @@
+﻿@model Pharmacy_Web.Models.Medicine
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+
+<div>
+    <h1 class="text-secondary">حذف</h1>
+
+    <h3 class="text-secondary">هل انت متأكد انك تريد حذف هذا الدواء؟</h3>
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2 for_key">
+                الاسم
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2 for_key">
+                الوصف
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="col-sm-2 for_key">
+                الصورة
+            </dt>
+            <dd class="col-sm-10">
+                <img src="https://localhost:44383/Images/@Model.ImageUrl" class="img-thumbnail" style="width:80px; height:80px;" />
+            </dd>
+            <dt class="col-sm-2 for_key">
+                الشركة
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.Company)
+            </dd>
+            <dt class="col-sm-2 for_key">
+                بلاد الصنع
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.MadeIn)
+            </dd>
+            <dt class="col-sm-2 for_key">
+                السعر
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            <dt class="col-sm-2 for_key">
+                تاريخ الأنتاج
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.DateCreated)
+            </dd>
+            <dt class="col-sm-2 for_key">
+                تاريخ الإنتهاء
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.ExpirationDate)
+            </dd>
+            <dt class="col-sm-2 for_key">
+                الفئة
+            </dt>
+            <dd class="col-sm-10 for_value">
+                @Html.DisplayFor(model => model.Category.Name)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="حذف" class="btn btn-danger" /> |
+            <a class="btn btn-secondary" asp-action="Index">العودة للقائمة</a>
+        </form>
+    </div>
+
+</div>

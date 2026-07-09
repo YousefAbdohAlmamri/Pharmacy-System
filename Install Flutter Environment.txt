@@ -1,0 +1,83 @@
+# **تثبيت بيئة Flutter**
+
+
+
+1. **تثبيت Flutter SDK** ووضع المجلد في قرص C ، وتعريفها في متغيرات البيئة.
+
+---
+
+2. **تنصيب Android Studio**
+
+   * يجب تفعيل الاتي من الاعدادات:
+     Android SDK Build-Tools 36
+     Android SDK Command-line Tool
+     Android Auto API Simulators
+     Android Emulator
+     Android SDK Platform-Tools
+     Google USB Driver
+     Intel 86 Emulator Accelerator (HAXM installer)
+     SDK Patch Applier v4
+
+
+
+---
+
+3. **تثبيت Android SDK** ووضعها في المسار C:\\Users\\Ali\\AppData\\Local ،  وتعريفها في متغيرات البيئة.
+
+---
+
+4. **تنصيب JDK 17 (java)** ، وتعريفها في متغيرات البيئة.
+
+---
+
+5. ##### **تنصيب Visual Studio Code** ، وتحميل fluter and dart
+
+
+
+
+
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+
+
+
+
+##### **عند تنصيب Android Studio يقوم بتحميل JDK-21، عند انشاء مشروع flutter فهو يستخدم JDK تبع Android ، ولكن اذا اردنا استخدام JDK-17 فيجب عمل الاتي:**
+
+
+
+1. ###### الدخول الى Android Studio الى Project Structure ثم الى SDKs ثم نحذف أي مجلد باسم jbr
+2. ###### ثم نعمل إضافة لـ Add JDK From Disk ، ثم نسمية ونضع مسار JDK-17
+3. ###### لكي نحذف **JDK تبع Android ، نذهب الى هذا المسار C:\\ProgramFiles\\Android\\Android Studio\\lib وحذف أي مجلد باسم jbr**
+
+
+
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+
+
+
+
+##### **عند البداء في مشروع flutter يفضل استخدام gradle-8.0**
+
+
+
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+
+
+##### **بعض المكاتب تحتاج لكي تشتغل الى تحميل git ، مثل مكتبة http**
+
+
+
+##### **عند اختبار API على المتصفح فهو لن يتم بسبب CROS ولتعدي ذلك نفتح cmd ثم نكتب**
+
+##### **"C:\\Users\\Ali\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe" --disable-web-security --user-data-dir="C:/chrome\_dev"**
+
+
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir="C:/chrome\_dev"
+
+flutter run -d chrome --web-browser-flag "--disable-web-security" --web-browser-flag "--user-data-dir=/tmp/chrome-dev"
+
+##### **هذا الامر سفتح لنا المتصفح بدون CROS ثم نضيف رابط تشغيل التطبيق**
+

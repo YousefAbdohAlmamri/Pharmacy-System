@@ -1,0 +1,135 @@
+﻿@model IEnumerable<Pharmacy_Web.ViewModels.MedicineDetails>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<div>
+    <h1 class="text-secondary">الأدوية</h1>
+
+    <p>
+        <a asp-action="Create" class="btn btn-primary">إضافة دواء</a>
+    </p>
+    <table class="table table-striped table-hover table-bordered" style="border-color:#364556;">
+        <thead class="table-dark">
+            <tr>
+                <th class="text-bold text-light">
+                    الاسم
+                </th>
+                <th class="text-bold text-light">
+                    الوصف
+                </th>
+                <th class="text-bold text-light">
+                    الصورة
+                </th>
+                @*
+                    <th>
+                        @Html.DisplayNameFor(model => model.Company)
+                    </th>
+                *@
+                <th class="text-bold text-light">
+                    بلد الصنع
+                </th>
+                <th class="text-bold text-light">
+                    السعر
+                </th>
+                @*
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateCreated)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.ExpirationDate)
+                    </th>
+                *@
+                <th class="text-bold text-light">
+                    الفئة
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="table-secondary">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <div class="short-description" style="white-space:pre-line;">@item.ShortDescription</div>
+                        @if (item.ShortDescription != item.FullDescription)
+                        {
+                            <button class="btn btn-link p-0" asp-action="Details" asp-controller="Medicines" asp-route-id="@item.Id">
+                                عرض المزيد
+                            </button>
+                        }
+                    </td>
+                    <td>
+                        <img src="@item.ImageUrl" class="img-thumbnail" style="width:64px; height:64px;" />
+                    </td>
+                    @*
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Company)
+                        </td>
+                    *@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MadeIn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    @*
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateCreated)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpirationDate)
+                        </td>
+                    *@
+                    <td>
+                        @item.Category?.Name
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-controller="Medicines" asp-route-id="@item.Id">Edit</a> |
+                        <a class="btn btn-sm btn-info" asp-action="Details" asp-controller="Medicines" asp-route-id="@item.Id">Details</a> |
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-controller="Medicines" asp-route-id="@item.Id">Delete</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @*<div class="modal fade" id="descriptionModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">وصف الدواء</h5>
+                </div>
+                <div class="modal-body" id="modalDescriptionContent"></div>
+            </div>
+        </div>
+    </div>*@
+</div>
+
+
+
+
+@section Scripts {
+
+         @*<script>
+             $('.toggle-description').click(function () {
+                 var shortDesc = $(this).siblings('.short-description');
+                 var fullDesc = $(this).siblings('.full-description');
+
+                 shortDesc.toggleClass('d-none');
+                 fullDesc.toggleClass('d-none');
+
+                 $(this).text(fullDesc.hasClass('d-none') ? 'عرض أقل' : 'عرض المزيد';
+
+             });
+         </script>*@
+}

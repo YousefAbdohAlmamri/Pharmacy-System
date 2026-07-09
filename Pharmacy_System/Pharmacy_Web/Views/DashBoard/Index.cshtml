@@ -1,0 +1,72 @@
+﻿@model Pharmacy_Web.ViewModels.DashboardStats
+@{
+    ViewData["Title"] = "لوحة التحكم";
+}
+
+<h2 class="mb-4">لوحة التحكم</h2>
+
+<div class="row">
+    <div class="col-md-3 mb-3">
+        <a asp-controller="Users" asp-action="Index">
+            <div class="card text-light text-center p-3"   style="background-color:cornflowerblue">
+                <h5>عدد المستخدمين</h5>
+                <p class="fs-4">@Model.UsersCount</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <a asp-controller="Categories" asp-action="Index">
+            <div class="card bg-dark text-light text-center p-3">
+                <h5>عدد الفئات</h5>
+                <p class="fs-4">@Model.CategoriesCount</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <a asp-controller="Medicines" asp-action="Index">
+            <div class="card text-light text-center p-3"  style="background-color:lightseagreen">
+                <h5>عدد الأدوية</h5>
+                <p class="fs-4">@Model.MedicinesCount</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <a asp-controller="Pharmacies" asp-action="Index">
+            <div class="card text-light text-center p-3" style="background-color:goldenrod">
+                <h5>عدد الصيدليات</h5>
+                <p class="fs-4">@Model.PharmaciesCount</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<hr />
+
+<h4 class="mb-3">آخر العمليات</h4>
+<table class="table table-dark table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>الرقم</th>
+            <th>العملية</th>
+            <th>التاريخ</th>
+            <th>المستخدم</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>إضافة دواء جديد</td>
+            <td>2025-08-17</td>
+            <td>Yousef</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>تعديل صيدلية</td>
+            <td>2025-08-16</td>
+            <td>Ahmed</td>
+        </tr>
+    </tbody>
+</table>

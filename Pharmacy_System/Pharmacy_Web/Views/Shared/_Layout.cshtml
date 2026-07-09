@@ -1,0 +1,874 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Pharmacy_Web</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <!-- Icons -->
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/dist/css/adminlte_ar.min.css" />
+
+    <style>
+        body {
+            background-color: #1B242F;
+            margin-bottom: 80px;
+        }
+
+        .text_label_input {
+            color: #9C9C9C;
+        }
+
+        .input_data {
+            background-color: #364556;
+            border: none;
+            color: #9C9C9C;
+        }
+
+        input[type="file"]::file-selector-button {
+            background-color:#9C9C9C;
+            color:white;
+            padding:10px 20px;
+            border:none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            input[type="file"]::file-selector-button:hover {
+                background-color: #746F6F;
+            }
+            /* التنسيق العام */
+        .pharmacies-section {
+            /*width: 1100px;*/
+            margin-right: -15px;
+            padding: 20px;
+            /*background-color: #1B242F;*/
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        /* تنسيق العنوان */
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+            margin-left: 80px;
+            position: relative;
+        }
+
+        .animated-title {
+            position: relative;
+            display: inline-block;
+            margin: 0;
+            color: #2c3e50;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .title-text {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .title-shadow {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            color: rgba(44, 62, 80, 0.2);
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .animated-title:hover .title-text {
+            transform: translate(-3px, -3px);
+            color: #3498db;
+        }
+
+        .animated-title:hover .title-shadow {
+            transform: translate(3px, 3px);
+        }
+
+        .title-decoration {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .decoration-line {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #3498db, transparent);
+            margin: 0 15px;
+            transition: all 0.3s ease;
+        }
+
+        .decoration-icon {
+            color: #3498db;
+            font-size: 1.2rem;
+            animation: pulse 2s infinite;
+        }
+
+
+
+        /* تنسيق البطاقات */
+        .pharmacies-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .pharmacy-card {
+            width: 190px;
+            /*background: white;*/
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgb(0 0 0 / 40%);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .pharmacy-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 35px rgba(0 0 0 / 60%);
+            }
+
+
+
+        /* For Pharmacy Element */
+   @* .pharmacy-card {
+    max-width: 400px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 30px auto;
+    background-color: #fff;
+    }
+       *@
+        .pharmacy-image {
+            position: relative;
+            /*background-color: #e9f1f9;*/
+        }
+            .pharmacy-image img {
+                width: 100%;
+                height: 215px;
+                display: block;
+                border-radius: 20px;
+            }
+        .rating-badge {
+            /*display: none;*/
+            position: absolute;
+            top: 0px;
+            left: 00px;
+            background-color: #4a90e2;
+            color: white;
+            border-radius: 15px 0;
+            padding: 5px 8px;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+    .rating-badge .star {
+    font-size: 18px;
+    margin-left: 5px;
+    color: yellow;
+    }
+        .card-body {
+            height: 75px;
+            text-align: center;
+            background-color: transparent;
+            padding: 15px;
+        }
+        .pharmacy-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: lightslategrey;
+        }
+    .pharmacy-location {
+    font-size: 16px;
+    color: #555;
+    }
+        .card-footer {
+            border-radius: 0px 0px 20px 20px;
+            display: flex;
+            justify-content: space-around;
+            background-color: initial;
+            padding: 10px 32px 10px 10px;
+            border-top: 1px solid #ddd;
+        }
+            .card-footer i {
+                font-size: 20px;
+                color: #0B61C5;
+                cursor: pointer;
+            }
+
+
+
+        /*For Pharmacy_page  */
+        .card-custom {
+            /*background-color: white;*/
+            border: none;
+            border-radius: 20px;
+            padding: 5px;
+            margin-bottom: -75px;
+            margin-top: -65px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            flex-direction: row-reverse;
+        }
+
+        .card-text {
+            flex: 1;
+            padding-left: 20px;
+            top:-20%;
+        }
+
+            .card-text h2 {
+                color: #B4BBC7;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+
+        .for_key {
+            color: #B4BBC7;
+        }
+
+        .for_value {
+            color: #7D8288;
+        }
+            .card-text p {
+                font-size: 18px;
+                color: #7D8288;
+                line-height: 1.8;
+            }
+
+        .container-img {
+            display: inline-block;
+            position: relative;
+            /*width:250px;
+            height:385px;*/
+            width: 290px;
+            height: 435px;
+        }
+
+        .container-img-background {
+            position: absolute;
+            width: 80%;
+            height: 100%;
+            background-color: #374151;
+            border-radius: 20px;
+            z-index: 1;
+            top: -30%
+        }
+
+        .circuler-img {
+            position: absolute;
+            width: 100%;
+            height: 210px;
+            border-radius: 50%;
+            object-fit: cover;
+            top: 45%;
+        }
+        .social-buttons {
+            margin-top: 20px;
+        }
+
+            .social-buttons .btn {
+                border: none;
+                margin-left: 10px;
+                font-weight: bold;
+                padding: 10px 20px;
+                border-radius: 10px;
+                color: #fff;
+            }
+
+        .btn-instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        .btn-facebook {
+            background-color: #1877f2;
+        }
+
+        .btn-x {
+            background-color: #1f2937;
+        }
+
+        /*-------------------------------*/
+
+
+  /* التنسيق العام */
+        .medicines-section {
+            /*width: 1000px;*/
+            padding: 20px;
+            /*background-color: #1B242F;*/
+            font-family: 'Tajawal', sans-serif;
+        }
+
+    /* تنسيق العنوان */
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+            /*margin-left: 80px;*/
+            position: relative;
+        }
+
+    .animated-title {
+        position: relative;
+        display: inline-block;
+        margin: 0;
+        color: #2c3e50;
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .title-text {
+        position: relative;
+        z-index: 2;
+        transition: all 0.3s ease;
+    }
+
+    .title-shadow {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        color: rgba(44, 62, 80, 0.2);
+        z-index: 1;
+        transition: all 0.3s ease;
+    }
+
+    .animated-title:hover .title-text {
+        transform: translate(-3px, -3px);
+        color: #3498db;
+    }
+
+    .animated-title:hover .title-shadow {
+        transform: translate(3px, 3px);
+    }
+
+    .title-decoration {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .decoration-line {
+        width: 80px;
+        height: 2px;
+        background: linear-gradient(to right, transparent, #3498db, transparent);
+        margin: 0 15px;
+        transition: all 0.3s ease;
+    }
+
+    .decoration-icon {
+        color: #3498db;
+        font-size: 1.2rem;
+        animation: pulse 2s infinite;
+    }
+
+
+   @@keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+
+
+    /* تنسيق البطاقات */
+    .medicines-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+    }
+
+        .medicine-card {
+            /*background: white;*/
+            border-radius: 20px;
+            width: 185px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 95%;
+            display: flex;
+            flex-direction: column;
+            border-color: #83AACC;
+            border-style: solid;
+        }
+
+    .medicine-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .medicine-image {
+        position: relative;
+        width: 136px;
+        height: 160px;
+        border-radius: 50%;
+        margin: -40px auto 20px;
+        border: 1px solid white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .medicine-card:hover .medicine-image {
+        transform: scale(1.05);
+    }
+
+    .medicine-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(52, 152, 219, 0.2);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .medicine-card:hover .image-overlay {
+        opacity: 1;
+    }
+
+    .medicine-content {
+        padding: 0 20px 30px;
+        text-align: center;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .medicine-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 15px;
+    }
+
+    .tag-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #3498db, #6c8bab);
+        color: white;
+        padding: 5px 20px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        margin-top: auto;
+    }
+
+    .tag-button:hover {
+        background: linear-gradient(135deg, #2980b9, #5d91c6);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        color: white;
+    }
+
+    .tag-button i {
+        margin-right: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .tag-button:hover i {
+        transform: translateX(3px);
+    }
+
+
+
+        /*تصميم متجاوب*/
+    @@media (max-width: 992px) {
+        .medicine-card {
+            max-width: 220px;
+        }
+
+        .medicine-image {
+            width: 150px;
+            height: 150px;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .animated-title {
+            font-size: 2rem;
+        }
+
+        .medicines-grid {
+            gap: 20px;
+        }
+
+        .medicine-card {
+            max-width: 100%;
+        }
+    }
+
+    /*--------------------------------------*/
+
+    .brand-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 15px;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+        position :relative;
+    }
+
+    .brand-link:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+        .brand-text {
+            border-radius: 10px;
+            width: 140px;
+            height: 45px;
+        }
+
+            .brand-text::before {
+                position: absolute;
+                width: 15px;
+                height: 45px;
+                background-color: blue;
+                top: 0;
+                left: -20px;
+            }
+
+            .brand-text::after {
+                position: absolute;
+            }
+        /* تنسيق عنوان SNIPER */
+        .sniper-title {
+            position: relative;
+            display: inline-block;
+            font-size: 1.6rem;
+            font-weight: 700;
+            /*color: transparent;*/
+            background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 50%, #00d2ff 100%);
+            background-size: 200% auto;
+            top: 3px;
+            /*-webkit-background-clip: text;
+        background-clip: text;*/
+            animation: shine 3s linear infinite;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sniper-text {
+            position: relative;
+            z-index: 2;
+            right: 6px;
+            color: #374151;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            right: -1px;
+        }
+        /*
+    .sniper-dot {
+        color: #e94560;
+        font-size: 2.2rem;
+        vertical-align: top;
+        animation: pulse 1.5s infinite;
+    }
+            */
+    .sniper-shadow {
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        background: radial-gradient(ellipse at center,
+                    rgba(0, 210, 255, 0.4) 0%,
+                    rgba(0, 210, 255, 0) 70%);
+        filter: blur(5px);
+        transform: scaleX(0.9);
+        opacity: 0.8;
+        animation: shadowPulse 3s ease-in-out infinite;
+    }
+
+    /* تأثيرات الحركة */
+    @@keyframes shine {
+        to {
+            background-position: 200% center;
+        }
+    }
+
+    @@keyframes pulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.2); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    @@keyframes shadowPulse {
+        0% { transform: scaleX(0.9); opacity: 0.8; }
+        50% { transform: scaleX(1.1); opacity: 0.5; }
+        100% { transform: scaleX(0.9); opacity: 0.8; }
+    }
+
+    /* تأثير عند التمرير */
+    .brand-link:hover .sniper-title {
+        animation: shine 1.5s linear infinite, bounce 0.5s ease;
+    }
+
+    @@keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+
+        .footer_website {
+            /*position: inherit;*/
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: -webkit-fill-available;
+            height:60px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand  navbar-dark">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" onclick="toggleSidebar()" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+            </li>
+            @*
+        <li class="nav-item d-none d-sm-inline-block">
+            <a class="nav-link" asp-controller="Home" asp-action="Privacy">Pharmacy</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a class="nav-link" asp-controller="Users" asp-action="Index">Users</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a class="nav-link" asp-controller="Categories" asp-action="Index">Categories</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a class="nav-link" asp-controller="Medicines" asp-action="Index">Medicines</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a class="nav-link" asp-controller="Pharmacies" asp-action="Index">Pharmacies</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a class="nav-link text-dark" asp-controller="Pharmacies" asp-action="Index">Pharmacies</a>
+        </li>
+            *@
+        </ul>
+
+        <!-- SEARCH FORM -->
+        <form method="GET" asp-controller="Home" asp-action="Search" class="form-inline ml-3">
+            <div class="input-group input-group-sm">
+                <input class="form-control form-control-navbar" style="outline: none; width: 310px; border-radius: 0 10px 10px 0; height: 45px;" name="name" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn  btn-primary" type="submit" asp-controller="Home" asp-action="Search" >
+                        <!--<i class="fas fa-search"></i>-->
+                        Search
+                    </button>
+                </div>
+            </div>
+        </form>
+    </nav>
+    <!-- /.navbar -->
+
+    <div class="container">
+
+        <!-- Main Sidebar Container -->
+        <aside id="sidebar" style="position: fixed; top:0; right:0;" class="main-sidebar  navbar-dark elevation-4">
+            <!-- Brand Logo -->
+            
+            <a asp-controller="Home" asp-action="Index" class="brand-link">
+                <span class="brand-text font-weight-light sniper-title">
+                    <span class="sniper-text">صيدلتك</span>
+                    <span class="sniper-shadow"></span>
+                </span>
+            </a>
+    
+    
+            <!--<a asp-controller="Home" asp-action="Index" class="brand-link">
+                <span class="brand-text font-weight-light">SNIPER</span>
+            </a>-->
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                
+                
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                        <!-- Sidebar user panel (optional) -->
+
+                        <li class="nav-item" style="margin:10px 0 30px; padding:0 10px;">
+                            <a asp-controller="Home" asp-action="Index" class="nav-link">
+                                <i class="nav-icon fas fa-user-alt"></i>
+                                <p>Yousef Almamri</p>
+                            </a>
+                            <hr />
+                        </li>
+
+
+
+                        <li class="nav-item">
+                            <a asp-controller="Home" asp-action="Index" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    الصفحة الرئيسية
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a asp-controller="Home" asp-action="Create" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    تسجيل صيدلية
+                                    @*<i class="fas fa-angle-left right"></i>*@
+
+                                </p>
+                            </a>
+                            @*<ul class="nav nav-treeview">
+
+                <li class="nav-item">
+                    <a id="add_category" href="#" class="nav-link">
+                        <i class="fa fa-plus "></i>
+                        <p class="text-light"> Add New </p>
+                    </a>
+                </li>
+
+
+                <li style="cursor: pointer;" class="nav-item category" data-category-id="#">
+                    <a id="" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Heart</p>
+                    </a>
+                </li>
+
+
+            </ul>*@
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    البحث باسم الدواء
+                                </p>
+                            </a>
+                        </li>
+
+                        @*<li class="nav-header">الحالة</li>
+
+                        <li style="cursor: pointer;" class="nav-item status" data-status-book="sold">
+                            <a id="statusSold" class="nav-link">
+                                <i class="nav-icon far fa-circle text-danger"></i>
+                                <p class="text">تم بيعه</p>
+                            </a>
+                        </li>
+                        <li style="cursor: pointer;" class="nav-item status" data-status-book="rental">
+                            <a id="" class="nav-link">
+                                <i class="nav-icon far fa-circle text-warning"></i>
+                                <p>تم استعارته</p>
+                            </a>
+                        </li>
+                        <li style="cursor: pointer;" class="nav-item status" data-status-book="available">
+                            <a id="" class="nav-link">
+                                <i class="nav-icon far fa-circle text-info"></i>
+                                <p>متاح</p>
+                            </a>
+                        </li>*@
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+
+        <main id="main-content" style="margin-right:180px;padding:10px;"  role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+    <!-- Main Footer -->
+    <footer class="main-footer navbar-dark footer_website">
+        <strong>Copyright &copy; 2024-2025 <a href="https://www.facebook.com/abdelrahman.g.nofal">Yousef Almamri</a>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+            <a target="_blank" class="text-danger" href="https://www.youtube.com/channel/UCbQh1yxBPVhyjB-G_blFFEQ"><i class="fab fa-lg fa-youtube"></i></a>
+            <a target="_blank" href="https://www.facebook.com/abdelrahman.g.nofal"><i class="fab fa-lg ml-1 fa-facebook"></i></a>
+            <a target="_blank" class="text-warning" href="https://www.instagram.com/abdelrahman_noufal/"><i class="fab fa-lg ml-1 fa-instagram"></i></a>
+        </div>
+    </footer>
+
+    @*<footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2025 - Pharmacy_Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
+
+    <!-- REQUIRED SCRIPTS -->
+    <script src="~/plugins/jquery_datepacker/jquery_ui.js"></script>
+
+    <!-- jQuery -->
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE -->
+    <script src="~/dist/js/adminlte.js"></script>
+    <!-- OPTIONAL SCRIPTS -->
+    <script src="~/plugins/chart.js/Chart.min.js"></script>
+    <script src="~/dist/js/demo.js"></script>
+   <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        let sidebarVisible = true;
+
+        function toggleSidebar() {
+            const sideBar = document.getElementById("sidebar");
+            const mainContent = document.getElementById("main-content");
+
+
+            if (sidebarVisible) {
+                sideBar.style.display = "none";
+                mainContent.style.marginRight = "0";
+            } else {
+                sideBar.style.display = "block";
+                mainContent.style.marginRight = "200px";
+            }
+
+            sidebarVisible = !sidebarVisible;
+        }
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

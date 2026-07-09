@@ -1,0 +1,176 @@
+﻿@model Pharmacy_Web.Models.Pharmacy
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+
+
+<div class="card-custom">
+    <div class="card-text">
+        <h2>@Html.DisplayFor(model => model.Name)</h2>
+        <p>
+            @*
+        نوع المستخدم، نوع المستخدم، نوع المستخدم، نوع المستخدم<br>
+        نوع المستخدم، نوع المستخدم، نوع المستخدم، نوع المستخدم<br>
+        نوع المستخدم، نوع المستخدم، نوع المستخدم، نوع المستخدم*@
+                @Html.DisplayFor(model => model.Description)
+            </p>
+        <div class="social-buttons">
+            <button class="btn btn-instagram">انستقرام</button>
+            <button class="btn btn-facebook">فيسبوك</button>
+            <button class="btn btn-x">موقع X</button>
+        </div>
+    </div>
+    <div class="container-img">
+        <div class="container-img-background">
+            <img src="https://localhost:44383/Images/@Model.ImageUrl" alt="رمز طبي" class="circuler-img" />
+        </div>
+    </div>
+</div>
+
+
+<hr style="height:7px" class="navbar-dark" />
+
+<div id="medicines-section" class="medicines-section">
+    <!-- العنوان مع التأثيرات -->
+    <div class="section-header">
+        <h2 class="animated-title">
+            <span class="title-text">الأدوية</span>
+            <span class="title-shadow">الأدوية</span>
+        </h2>
+        <div class="title-decoration">
+            <span class="decoration-line"></span>
+            <span class="decoration-icon"><i class="fas fa-prescription-bottle-alt"></i></span>
+            <span class="decoration-line"></span>
+        </div>
+    </div>
+
+    <!-- بطاقات الأدوية -->
+    <div class="container" style="margin-top: -35px;">
+        <div class="row medicines-grid">
+            
+        @foreach (var medicine in Model.PharmacyMedicines)
+        { 
+            <!-- البطاقة الأولى -->
+            <a asp-action="MedicineDetails" asp-controller="Home" asp-route-id="@medicine.MedicineId">
+                <div class=" col-md-3" style=" margin-top: 65px;">
+                    <div class="medicine-card">
+                        <div class="medicine-image">
+                            <img src="https://localhost:44383/Images/@medicine.Medicine.ImageUrl" alt="Donnatab" />
+                            <div class="image-overlay"></div>
+                        </div>
+                        <div class="medicine-content">
+                            <div class="medicine-title">@medicine.Medicine.Name</div>
+                            <a href="#" class="tag-button">
+                                @medicine.Medicine.Category.Name <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+            <!-- البطاقة الثانية -->
+            <!--<div class=" col-md-3" style=" margin-top: 65px;">
+                <div class="medicine-card">
+                    <div class="medicine-image">
+                        <img src="~/img/img_1.jpg" alt="Paracetamol" />
+                        <div class="image-overlay"></div>
+                    </div>
+                    <div class="medicine-content">
+                        <div class="medicine-title">Paracetamol</div>
+                        <a href="#" class="tag-button">
+                            Pain <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>-->
+
+            <!-- البطاقة الثالثة -->
+            <!--<div class=" col-md-3" style=" margin-top: 65px;">
+                <div class="medicine-card">
+                    <div class="medicine-image">
+                        <img src="~/img/img_1.jpg" alt="Ibuprofen" />
+                        <div class="image-overlay"></div>
+                    </div>
+                    <div class="medicine-content">
+                        <div class="medicine-title">Ibuprofen</div>
+                        <a href="#" class="tag-button">
+                            Inflammation <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>-->
+
+            <!-- البطاقة الرابعة -->
+            <!--<div class=" col-md-3" style=" margin-top: 65px;">
+                <div class="medicine-card">
+                    <div class="medicine-image">
+                        <img src="~/img/img_1.jpg" alt="Ibuprofen" />
+                        <div class="image-overlay"></div>
+                    </div>
+                    <div class="medicine-content">
+                        <div class="medicine-title">Ibuprofen</div>
+                        <a href="#" class="tag-button">
+                            Inflammation <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>-->
+
+
+
+            <!-- البطاقة الرابعة -->
+            <!--<div class=" col-md-3" style=" margin-top: 65px;">
+                <div class="medicine-card">
+                    <div class="medicine-image">
+                        <img src="~/img/img_1.jpg" alt="Ibuprofen" />
+                        <div class="image-overlay"></div>
+                    </div>
+                    <div class="medicine-content">
+                        <div class="medicine-title">Ibuprofen</div>
+                        <a href="#" class="tag-button">
+                            Inflammation <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>-->
+
+
+            <!-- البطاقة الرابعة -->
+            <!--<div class=" col-md-3" style=" margin-top: 65px;">
+                <div class="medicine-card">
+                    <div class="medicine-image">
+                        <img src="~/img/img_1.jpg" alt="Ibuprofen" />
+                        <div class="image-overlay"></div>
+                    </div>
+                    <div class="medicine-content">
+                        <div class="medicine-title">Ibuprofen</div>
+                        <a href="#" class="tag-button">
+                            Inflammation <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>-->
+
+
+            <!-- البطاقة الرابعة -->
+            <!--<div class=" col-md-3" style=" margin-top: 65px;">
+                <div class="medicine-card">
+                    <div class="medicine-image">
+                        <img src="~/img/img_1.jpg" alt="Ibuprofen" />
+                        <div class="image-overlay"></div>
+                    </div>
+                    <div class="medicine-content">
+                        <div class="medicine-title">Ibuprofen</div>
+                        <a href="#" class="tag-button">
+                            Inflammation <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+    </div>
+</div>
+
+
+

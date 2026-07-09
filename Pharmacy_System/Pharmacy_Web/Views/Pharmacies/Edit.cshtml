@@ -1,0 +1,219 @@
+﻿@model Pharmacy_Web.ViewModels.CreatePharmacyDto
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<div>
+    <h1 class="text-secondary">تعديل</h1>
+
+    <h4 class="text-secondary">للصيدلية</h4>
+    <hr />
+
+    <form asp-action="Create" id="pharmacyForm" enctype="multipart/form-data">
+        <div class="form-group">
+            <label asp-for="Name" class="control-label text_label_input">الاسم</label>
+            <input asp-for="Name" class="form-control input_data" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description" class="control-label text_label_input">الوصف</label>
+            <input asp-for="Description" class="form-control input_data" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ImageFile" class="control-label text_label_input">الصورة</label>
+            <input type="file" asp-for="ImageFile" class="form-control input_data" onchange="loadFile(event)" style="height: auto;" />
+            <img id="myImg" class="img-thumbnail" style="width: 100px; height: 100px; background-color: unset; margin-top: 10px;" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Location" class="control-label text_label_input">الموقع</label>
+            <input asp-for="Location" class="form-control input_data" />
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Phone" class="control-label text_label_input">التلفون</label>
+            <input asp-for="Phone" class="form-control input_data" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="UserId" class="control-label text_label_input">المالك</label>
+            <select asp-for="UserId" class="form-control input_data" asp-items="ViewBag.UserId"></select>
+        </div>
+
+        <h3 class="text_label_input" style="margin-top: 20px;">الأدوية المتاحة</h3>
+
+        <table class="table table-striped table-hover table-bordered" style="border-color:#364556;" id="medicinesTable">
+            <thead class="navbar-dark">
+                <tr>
+                    <th class="text-bold text-light">الدواء</th>
+                    <th class="text-bold text-light">الكمية</th>
+                    <th class="text-bold text-light">إجراء</th>
+                </tr>
+            </thead>
+            <tbody class="table-secondary">
+                @foreach (var medicine in ViewBag.Medicines)
+                {
+                    <tr>
+                        <td style="color:slategray;">@medicine.Name</td>
+                        <td>
+                            <input type="number" class="form-control stock" style="background-color: #9C9C9C;"
+                                   data-medicine-id="@medicine.Id" value="0" min="0" />
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success add-medicine">إضافة</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="card mt-3" style="background-color: initial; box-shadow: 0 10px 30px rgb(0 0 0 / 40%);">
+            <div class="card-header">
+                <h4 class="mb-0 text_label_input">الأدوية المختارة</h4>
+            </div>
+            <div class="card-body p-0">
+                <div id="selectedMedicinesContainer" style="max-height: 200px; overflow-y: auto">
+                    <table class="table table-striped mb-0">
+                        <tbody id="selectedList">
+                            <!-- سيتم عرض الأدوية المختارة هنا -->
+                            <tr class="empty-row">
+                                <td colspan="3" class="text-center text-muted">لاتوجد أدوية مختارة</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" asp-for="Medicines" id="medicinesJson" />
+
+        <div class="form-group mt-3">
+            <input type="submit" value="حفظ الصيدلية" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">العودة للقائمة</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+
+        <script>
+            var loadFile = function (event) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var myImg = document.getElementById('myImg');
+                    myImg.src = reader.result;
+                }
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                var selectedMedicines = [];
+
+                // إضافة دواء إلى القائمة المختارة
+                $('.add-medicine').click(function () {
+                    var row = $(this).closest('tr');
+                    var medicineId = parseInt(row.find('.stock').data('medicine-id'));
+                    var medicineName = row.find('td:first').text();
+                    var stock = parseInt(row.find('.stock').val());
+
+                    if (stock > 0) {
+                        // البحث إذا كان الدواء مضاف مسبقاً
+                        var existingIndex = selectedMedicines.findIndex(m => m.MedicineId === medicineId);
+
+                        if (existingIndex >= 0) {
+                            // تحديث الكمية إذا كان الدواء موجود
+                            selectedMedicines[existingIndex].Stock = stock;
+                        } else {
+                            // إضافة دواء جديد
+                            selectedMedicines.push({
+                                MedicineId: medicineId,
+                                Stock: stock,
+                                Name: medicineName
+                            });
+                        }
+
+                        updateSelectedList();
+                        updateHiddenField();
+                    } else {
+                        alert('الكمية يجب أن تكون أكبر من الصفر');
+                    }
+                });
+
+                // تحديث قائمة الأدوية المختارة
+                function updateSelectedList() {
+                    var list = $('#selectedList');
+                    list.empty();
+
+                    if (selectedMedicines.length === 0) {
+                        list.append('<tr class="empty-row"><td colspan"3" class="text-center text-muted">لا توجد أدوية مختارة</td></tr>');
+                    } else {
+                        selectedMedicines.forEach(function (medicine, index) {
+                            list.append(`
+                                              <tr style="background-color: darkgray;">
+                                                    <td>${medicine.Name}</td>
+                                                    <td class="text-center">${medicine.Stock}</td>
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn btn-sm btn-danger remove-medicine" data-medicine-id="${medicine.MedicineId}">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                              </tr>
+
+                                        `);
+                        });
+                    }
+                }
+
+
+                // ضبط ارتفاع الحاوية تلقائيا
+                function adjustContainerHeight() {
+                    const container = $('#selectedMedicinesContainer');
+                    const itemCount = selectedMedicines.length;
+
+                    if (itemCount === 0) {
+                        container.css('max-height', '200px');
+                    } else if (itemCount <= 3) {
+                        container.css('max-height', (itemCount * 60 + 20) + 'px');
+                    } else {
+                        container.css('max-height', '200px'); // حد اقصى مع اظهار scroll
+                    }
+                }
+
+                // حذف دواء من القائمة المختارة
+                $(document).on('click', '.remove-medicine', function () {
+                    var medicineId = parseInt($(this).data('medicine-id'));
+                    selectedMedicines = selectedMedicines.filter(m => m.MedicineId !== medicineId);
+                    updateSelectedList();
+                    updateHiddenField();
+                    adjustContainerHeight();
+                });
+
+                // تحديث الحقل المخفي بالأدوية المختارة
+                function updateHiddenField() {
+                    var medicinesToSend = selectedMedicines.map(m => ({
+                        MedicineId: m.MedicineId,
+                        Stock: m.Stock
+                    }));
+                    $('#medicinesJson').val(JSON.stringify(medicinesToSend));
+                }
+
+                // التأكد من اختيار دواء واحد على الأقل
+                $('#pharmacyForm').submit(function (e) {
+                    if (selectedMedicines.length === 0) {
+                        e.preventDefault();
+                        alert('يجب اختيار دواء واحد على الأقل');
+                    }
+                });
+            });
+        </script>
+}

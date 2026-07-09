@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Pharmacy_Web.Models.Pharmacy>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<!-- شريط البحث -->
+<!--<div class="container py-3">
+    <div class="row justify-content-center">
+        <div class="col-md-8 d-flex">
+            <input type="text" class="form-control me-2" placeholder="بحث باسم الدواء" />
+            <button class="btn btn-primary">بحث</button>
+        </div>
+    </div>
+</div>
+-->
+@*<div id="pharmacies-section" class="pharmacies-section">*@
+<!-- العنوان مع التأثيرات -->
+<div class="section-header">
+    <h2 class="animated-title">
+        <span class="title-text">الصيدليات</span>
+        <span class="title-shadow">الصيدليات</span>
+    </h2>
+    <div class="title-decoration">
+        <span class="decoration-line"></span>
+        <span class="decoration-icon"><i class="fas fa-prescription-bottle-alt"></i></span>
+        <span class="decoration-line"></span>
+    </div>
+</div>
+
+
+
+<div class="row" style="margin-top: -35px;">
+
+    <!-- بطاقات الصيدليات -->
+
+    @*<div class="row pharmacies-grid">*@
+
+        @foreach (var item in Model)
+        {
+            <!-- البطاقة الأولى -->
+            <a asp-action="Privacy" asp-controller="Home" asp-route-id="@item.Id" class=" col-md-3 mb-3" style=" margin-top: 35px;">
+
+                
+                    <div class="pharmacy-card">
+                        <div class="pharmacy-image">
+                            <img src="@item.ImageUrl" alt="صيدلية صنعاء" />
+                            @*<div class="rating-badge">
+                    <span class="star"><i class="fas fa-star"></i></span> 4.5
+                </div>*@
+                        </div>
+                        <div class="card-body">
+                            <div class="pharmacy-name">@Html.DisplayFor(modelItem => item.Name)</div>
+                            <div class="pharmacy-location">@Html.DisplayFor(modelItem => item.Location)</div>
+                        </div>
+                        <div class="card-footer">
+                            <i class="fas fa-phone"></i>
+                            <i class="fas fa-share-alt"></i>
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                
+
+            </a>
+        }
+    @*</div>*@
+</div>
+
+@*</div>*@
+
+
+
+
+
+
+
+<!--<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+-->
